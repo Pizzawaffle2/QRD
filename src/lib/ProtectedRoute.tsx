@@ -1,15 +1,18 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from './authContext';
+const ProtectedRoute: React.FC<{ children: React.ReactNode; requiredRole?: string }> = ({
+  children,
+  requiredRole,
+}) => {
+  const { isAuthenticated, user, isLoading } = useAuth0();
 
-const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
-  const { user } = useAuth();
+  if (isLoading) return <div>Loading...</div>;
 
-  if (!user) {
-    return <Navigate to="/" replace />;
+  const userHasRequiredRole = user?.['https://example.com/roles']?.includes(requiredRole);
+
+  if (!isAuthenticated || (requiredRole && !userHasRequiredRole)) {
+    return <Navigate to="/login" />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

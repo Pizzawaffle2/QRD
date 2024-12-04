@@ -9,9 +9,4 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  server: {
-    hmr: {
-      overlay: false, // Disable error overlay for debugging
-    },
-  },
 });

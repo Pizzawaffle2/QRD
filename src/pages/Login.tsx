@@ -1,22 +1,37 @@
-import React from 'react';
-import { useAuth } from '@/hooks/useAuth';
+// src\pages\Login.tsx
 
-const Login: React.FC = () => {
-  const { login } = useAuth();
+import { useAuth0 } from "@auth0/auth0-react";
 
-  const handleLogin = () => {
-    login({ id: '1', name: 'Jane Doe', email: 'jane.doe@example.com' });
-  };
+const Login = () => {
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl mb-4">Login</h1>
-      <button
-        onClick={handleLogin}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        Login
-      </button>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="bg-white p-8 rounded shadow-lg w-full max-w-md text-center">
+        {!isAuthenticated ? (
+          <>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Login</h2>
+            <button
+              onClick={() => loginWithRedirect()}
+              type="button"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Login
+            </button>
+          </>
+        ) : (
+          <>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Welcome!</h2>
+            <button
+              type="button"
+              onClick={() => logout({ returnTo: window.location.origin })}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            >
+              Logout
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 };
