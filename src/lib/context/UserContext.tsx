@@ -1,20 +1,27 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
-interface UserContextProps {
-  user: { name: string; role: string } | null;
-  setUser: (user: { name: string; role: string } | null) => void;
+interface User {
+  name: string;
 }
 
-const UserContext = createContext<UserContextProps>({
-  user: null,
-  setUser: () => {},
-});
+interface AuthContextProps {
+  user: User | null;
+  login: (user: User) => void;
+  logout: () => void;
+}
+
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const UserProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<{ name: string; role: string } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+
+  const login = (newUser: User) => setUser(newUser);
+  const logout = () => setUser(null);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

@@ -1,14 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/lib/authContext';
+import { useAuth } from '@/hooks/useAuth';
 
 const Login: React.FC = () => {
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleLogin = () => {
-    login({ name: 'John Doe' }); // Mock login
-    navigate('/dashboard');
+    login({ id: '1', name: 'Jane Doe', email: 'jane.doe@example.com' });
   };
 
   return (

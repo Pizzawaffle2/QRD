@@ -17,26 +17,13 @@ const App = () => {
     <Router>
       <Header />
       <Routes>
-        {/* Home and Dashboard */}
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
-
-        {/* Admin */}
         <Route path="/admin/user-management" element={<UserManagement />} />
-
-        {/* Analytics */}
         <Route path="/analytics/advanced" element={<AdvancedAnalytics />} />
-
-        {/* Settings */}
         <Route path="/settings" element={<Settings />} />
-
-        {/* Links */}
         <Route path="/links/manage" element={<LinkManagement />} />
-
-        {/* QR Codes */}
         <Route path="/qrcodes/customize" element={<CustomizeQRCode />} />
-
-        {/* Calendar */}
         <Route path="/calendar/manage" element={<CalendarManagement />} />
       </Routes>
     </Router>
